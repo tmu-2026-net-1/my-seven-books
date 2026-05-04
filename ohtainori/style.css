@@ -1,0 +1,362 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&display=swap");
+
+.book-list-container {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
+  width: max-content;
+  min-height: min(28rem, calc(100vh - 12rem));
+  padding-inline: clamp(1rem, 6vw, 4rem);
+}
+
+.book-list-item {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 1.35rem;
+  width: clamp(12rem, 17vw, 16rem);
+  aspect-ratio: 1 / 1.4;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(20, 20, 22, 0.96) 0%, rgba(8, 8, 10, 0.98) 100%);
+  color: #f7f0df;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.42), 0 0 0 1px rgba(255, 215, 120, 0.05) inset;
+  transform: scale(0.98);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  scroll-snap-align: center;
+  will-change: transform;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.book-list-item:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+}
+
+.book-list-item.is-centered {
+  transform: scale(1.15);
+  border-color: rgba(212, 175, 55, 0.85);
+  background: linear-gradient(180deg, rgba(33, 26, 12, 0.98) 0%, rgba(13, 11, 8, 0.99) 100%);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.52), 0 0 0 1px rgba(212, 175, 55, 0.22) inset;
+  z-index: 1;
+}
+
+#book-list {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 7rem);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: clamp(1rem, 6vw, 4rem);
+  padding: 1.25rem 0 2rem;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 2rem 1rem 2rem;
+  box-sizing: border-box;
+  font-family: "Noto Serif JP", "Yu Mincho", "Hiragino Mincho ProN", serif;
+  color: #f7f0df;
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255, 235, 186, 0.22), transparent 18%),
+    radial-gradient(circle at 50% 28%, rgba(212, 175, 55, 0.12), transparent 34%),
+    linear-gradient(180deg, #15110d 0%, #100d0a 42%, #090705 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 238, 196, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 238, 196, 0.12) 1px, transparent 1px),
+    linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+  background-size: 38px 38px, 38px 38px, 152px 152px, 152px 152px;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  opacity: 0.58;
+  mask-image: radial-gradient(circle at 50% 24%, rgba(0, 0, 0, 0.92), rgba(0, 0, 0, 0.72) 42%, rgba(0, 0, 0, 0.22) 72%, transparent 100%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(255, 239, 193, 0.22), transparent 20%),
+    radial-gradient(circle at 50% 26%, rgba(255, 217, 122, 0.14), transparent 34%),
+    radial-gradient(circle at 50% 42%, rgba(255, 190, 84, 0.08), transparent 52%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+h1 {
+  margin: 0 0 1.25rem;
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: 0.14em;
+  font-family: "Cormorant Garamond", "Noto Serif JP", serif;
+  color: #f6e2a5;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.6);
+}
+
+.author {
+  color: rgba(247, 240, 223, 0.72);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.35rem;
+  line-height: 1.55;
+  overflow: hidden;
+  color: #fff7df;
+}
+
+.publisher, .year {
+  font-size: 0.82rem;
+  color: rgba(212, 175, 55, 0.9);
+  line-height: 1.35;
+}
+
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.42);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.58);
+}
+
+.book-cover {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.cover-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover-placeholder {
+  font-size: 0.8rem;
+  color: rgba(212, 175, 55, 0.5);
+}
+
+.book-info {
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.35rem;
+}
+
+.book-detail-shell {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: 1.5rem 0 2rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  color: #f6e2a5;
+  text-decoration: none;
+  letter-spacing: 0.08em;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.book-detail-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.book-detail-cover-wrap {
+  display: flex;
+  justify-content: center;
+}
+
+.book-detail-cover {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1 / 1.45;
+  object-fit: cover;
+  border-radius: 1.15rem;
+  box-shadow: 0 28px 54px rgba(0, 0, 0, 0.55);
+}
+
+.cover-placeholder-large {
+  width: 100%;
+  max-width: 360px;
+  aspect-ratio: 1 / 1.45;
+  display: grid;
+  place-items: center;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  background: linear-gradient(180deg, rgba(20, 20, 22, 0.96) 0%, rgba(8, 8, 10, 0.98) 100%);
+  color: rgba(212, 175, 55, 0.6);
+}
+
+.book-detail-info {
+  padding-top: 0.5rem;
+}
+
+.book-detail-kicker {
+  margin: 0 0 0.75rem;
+  color: rgba(212, 175, 55, 0.72);
+  letter-spacing: 0.18em;
+  font-size: 0.8rem;
+}
+
+.book-detail-title {
+  margin: 0;
+  font-family: "Cormorant Garamond", "Noto Serif JP", serif;
+  font-size: clamp(2.2rem, 5vw, 4rem);
+  line-height: 1.05;
+}
+
+.book-detail-author {
+  margin: 1rem 0 1.5rem;
+  font-size: 1.05rem;
+  color: rgba(247, 240, 223, 0.72);
+}
+
+.book-detail-meta {
+  display: grid;
+  gap: 1rem;
+  margin: 0;
+}
+
+.book-detail-meta div {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.95rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(212, 175, 55, 0.12);
+}
+
+.book-detail-meta dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: rgba(212, 175, 55, 0.72);
+}
+
+.book-detail-meta dd {
+  margin: 0;
+  color: #f7f0df;
+  line-height: 1.7;
+}
+
+.book-detail-empty {
+  text-align: center;
+  color: rgba(247, 240, 223, 0.7);
+}
+
+@media (max-width: 800px) {
+  .book-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-detail-cover,
+  .cover-placeholder-large {
+    max-width: 280px;
+  }
+}
+
+.review-section {
+  margin-top: 3rem;
+  padding: 2rem 1.25rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.22);
+  max-width: 860px;
+}
+
+.review-kicker {
+  margin: 0 0 0.5rem;
+  color: rgba(212, 175, 55, 0.72);
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+}
+
+.review-section h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.65rem;
+  color: #f6e2a5;
+}
+
+.review-card {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border-radius: 0.95rem;
+  border: 1px solid rgba(212, 175, 55, 0.14);
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.review-placeholder {
+  margin: 0;
+  line-height: 1.9;
+  color: rgba(247, 240, 223, 0.86);
+}
+
+.book-detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.amazon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.6rem;
+  border: 1px solid rgba(212, 175, 55, 0.22);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.14), rgba(212, 175, 55, 0.06));
+  color: #d4af37;
+  text-decoration: none;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.amazon-link:hover {
+  border-color: rgba(212, 175, 55, 0.55);
+  background: linear-gradient(180deg, rgba(212, 175, 55, 0.2), rgba(212, 175, 55, 0.1));
+  box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.12);
+}

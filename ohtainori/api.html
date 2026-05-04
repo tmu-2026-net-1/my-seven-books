@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>API Test</title>
+</head>
+<body>
+    <h1>API Test</h1>
+    <button onclick="testAPI()">Test API</button>
+    <pre id="output"></pre>
+    
+    <script>
+        async function testAPI() {
+            const output = document.getElementById('output');
+            output.innerHTML = 'Loading...';
+            
+            try {
+                const response = await fetch('https://script.google.com/macros/s/AKfycbzcbPFBgkWfbA4BsX9EruALPgvwk1mkE-1mwX4Nv6aG1eBkQXIYtOtg9Y7tEYX5zypo/exec');
+                const data = await response.json();
+                
+                output.innerHTML = `✅ API Success!\n\n`;
+                output.innerHTML += `Books returned: ${data.length}\n\n`;
+                
+                // Show first 3 books
+                data.slice(0, 3).forEach((book, idx) => {
+                    output.innerHTML += `Book ${idx}: ${book.title} (ISBN: ${book.isbn})\n`;
+                });
+            } catch (error) {
+                output.innerHTML = `❌ API Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
