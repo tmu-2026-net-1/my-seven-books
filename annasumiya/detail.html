@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本の詳細 - 私のおすすめする7冊</title>
+        <link rel="stylesheet" href="style.css">
+        <script>
+            (function(d) {
+                var config = {
+                    kitId: 'smv5xjc',
+                    scriptTimeout: 3000,
+                    async: true
+                },
+                h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+            })(document);
+        </script>
+        <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: clamp(0.5rem, 2vw, 2rem);
+            margin: 0;
+            background-image: url("mokume2.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center top;
+            background-attachment: fixed;
+        }
+        .detail-container {
+            background-color: rgba(255, 255, 255, 0.95);
+            background-image: url("Stripe2.png");
+            background-repeat: repeat-x;
+            background-position: center top;
+            background-size: auto 100%;
+            padding: clamp(1rem, 4vw, 3.5rem);
+            border-radius: 18px;
+            max-width: min(900px, 96vw);
+            width: 100%;
+            box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+            margin-top: clamp(1rem, 4vh, 3rem);
+            box-sizing: border-box;
+        }
+        .detail-img {
+            width: 100%;
+            /* reduced size: smaller max-width for book image */
+            max-width: clamp(100px, 32vw, 320px);
+            height: auto;
+            border-radius: 12px;
+            display: block;
+            margin: 0 auto clamp(0.5rem, 2.5vw, 2rem);
+        }
+        .detail-info div {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            font-size: clamp(1rem, 2.6vw, 2.5rem);
+        }
+        .recommendation {
+            font-size: clamp(0.9rem, 2vw, 1.6rem);
+            margin: 0.25rem 0 0 0;
+            line-height: 1.5;
+        }
+        .label {
+            font-weight: bold;
+            color: #000000;
+            display: block;
+            margin-bottom: 0.35rem;
+            font-size: clamp(0.9rem, 1.8vw, 1.5rem);
+        }
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            text-decoration: none;
+            color: #2a2a2a;
+            font-weight: bold;
+            font-size: clamp(1rem, 2.2vw, 2rem);
+        }
+    </style>
+</head>
+<body>
+    <div class="detail-container">
+        <a href="index.html" class="back-link">← back</a>
+        <div id="detail-content">
+            <!-- JSで動的に挿入 -->
+        </div>
+    </div>
+
+    <script>
+        const booksData = {
+            "booknishi.jpeg": { title: "西の魔女が死んだ", date: "1994年", author: "梨木香歩", recommendation: "心が疲れた時に癒される、おばあちゃんと娘の温かい物語です。" },
+            "bookazukari.jpeg": { title: "あずかりやさん", date: "2013年", author: "大山淳子", recommendation: "店主の優しさと、預けられる品々にまつわる切ない物語が心に響きます。" },
+            "bookchiisai.jpeg": { title: "ちいさいモモちゃん", date: "1980年", author: "松谷みよ子", recommendation: "子どもの日常の発見や気持ちをやさしく描いた、ほっとする一冊です" },
+            "booknekomura.jpeg": { title: "きょうの猫村さん", date: "2005年", author: "ほしよりこ", recommendation: "頑張り屋の猫村さんに癒され、毎日が少し楽しくなる作品です。" },
+            "booknno.jpeg": { title: "Nのために", date: "2014年", author: "湊かなえ", recommendation: "ある事件をめぐる複数の視点が重なり合い、真相と「守りたい思い」が静かに浮かび上がるミステリーです。" },
+            "bookrive.jpeg": { title: "リバース", date: "2017年", author: "湊かなえ", recommendation: "意外な展開が重なって、最後まで先が読めないスピード感のある物語です。" },
+            "bookryuusei.jpeg": { title: "流星の絆", date: "2008年", author: "東野圭吾", recommendation: "切ない復讐劇の中にある兄妹の強い絆と、衝撃の結末に引き込まれます。" }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const img = params.get('img');
+        const content = document.getElementById('detail-content');
+
+        if (img && booksData[img]) {
+            const data = booksData[img];
+            content.innerHTML = `
+                <img src="${img}" alt="${data.title}" class="detail-img">
+                <div class="detail-info">
+                    <div><span class="label">Title</span>${data.title}</div>
+                    <div><span class="label">Publication Date</span>${data.date}</div>
+                    <div><span class="label">Author</span>${data.author}</div>
+                    <div><span class="label">Why I Recommend It</span><p class="recommendation">${data.recommendation}</p></div>
+                </div>
+            `;
+        } else {
+            content.innerHTML = "<p>Book not found.</p>";
+        }
+    </script>
+</body>
+</html>
