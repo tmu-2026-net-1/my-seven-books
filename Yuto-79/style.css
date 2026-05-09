@@ -1,0 +1,194 @@
+/* 全体のリセットとベース */
+* {
+    box-sizing: border-box; /* サイズ計算を正確にする */
+}
+
+body {
+    background-color: #fcfcfc;
+    color: #333;
+    margin: 0;
+    font-family: "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", serif;
+    height: 100vh;
+    overflow: hidden; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* メインコンテナ */
+.container {
+    display: flex;
+    align-items: center; /* 垂直方向中央 */
+    justify-content: flex-start; /* 左端から整列（スクロール計算のバグを防ぐ） */
+    flex: 1;
+    padding: 0 5vw;
+    width: 100%;
+}
+
+/* 左側の紹介文 */
+.intro {
+    flex: 0 0 360px;
+    margin-right: 4vw; /* リストとの距離を固定 */
+    z-index: 10;
+    padding-left: 2vw;
+}
+
+.intro .line {
+    width: 2px;
+    height: 48px;
+    background: #dcdcdc;
+    margin-bottom: 24px;
+}
+
+.intro h1 {
+    font-size: 2.6rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 36px;
+    white-space: nowrap;
+}
+
+.intro p {
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 2;
+}
+
+.intro .short-line {
+    width: 36px;
+    height: 1px;
+    background: #ccc;
+    margin-top: 48px;
+}
+
+/* 右側のブックリスト */
+#book-list {
+    display: flex;
+    /* 全ての本の間の隙間を 60px で厳密に固定 */
+    gap: 60px; 
+    padding: 40px 10vw 40px 0; 
+    overflow-x: auto;
+    align-items: flex-start;
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+    scroll-behavior: smooth;
+    flex: 1;
+}
+
+#book-list::-webkit-scrollbar {
+    display: none;
+}
+
+/* 各本のアイテム */
+.book-list-item {
+    display: flex;
+    flex: 0 0 auto; /* 勝手に縮んだり伸びたりさせない */
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    gap: 0; /* 初期状態の内部隙間は0 */
+}
+
+.book-main {
+    width: 216px; /* 幅を216pxに厳密固定 */
+    flex: 0 0 216px;
+    text-align: center;
+}
+
+/* 飛び出る詳細エリア */
+.book-detail {
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    text-align: left;
+    visibility: hidden;
+    pointer-events: none; /* ホバーしていない時は反応させない */
+}
+
+/* ホバー時の挙動 */
+.book-list-item:hover {
+    gap: 30px; /* 本と情報の間の隙間 */
+}
+
+.book-list-item:hover .book-detail {
+    width: 216px;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.detail-inner {
+    width: 216px;
+    padding-top: 45px;
+}
+
+.description {
+    font-size: 0.85rem;
+    line-height: 2.2;
+    color: #444;
+    margin-bottom: 24px;
+    
+    /* 10行で制限するための必須セット */
+    display: -webkit-box;           /* 必須：これがないと効きません */
+    -webkit-line-clamp: 10;        /* 10行に制限 */
+    -webkit-box-orient: vertical;   /* 必須：箱の向きを垂直に指定 */
+    overflow: hidden;               /* 必須：はみ出た分を隠す */
+    
+    /* 改行を反映させたい場合は追加 */
+    white-space: pre-wrap; 
+}
+
+.meta-bottom {
+    border-top: 1px solid #eee;
+    padding-top: 12px;
+    font-size: 0.85rem;
+    color: #999;
+}
+
+.book-number {
+    font-size: 1rem;
+    font-family: "Georgia", serif;
+    color: #999;
+    margin-bottom: 18px;
+}
+
+.book-cover {
+    width: 100%;
+    aspect-ratio: 1 / 1.414;
+    box-shadow: 0 12px 24px rgba(0,0,0,0.07);
+    margin-bottom: 24px;
+    background-color: #fff;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.book-list-item:hover .book-cover {
+    transform: translateY(-10px);
+}
+
+.book-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.book-info .title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #111;
+    margin-top: 10px;
+}
+
+.author, .publisher, .year {
+    color: #777;
+    font-size: 0.9rem;
+    display: block;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding: 30px 7vw;
+    font-size: 0.9rem;
+    color: #bbb;
+}
