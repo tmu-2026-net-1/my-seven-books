@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>七冊旅</title>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>七冊旅</h1>
+        <div class="header-subtitle">本棚が表示されるまで時間がかかることがあります。ボタンを押さずにお待ちください。</div>
+
+        <div id="book-list">
+            <!-- 書籍のリストがここに表示される -->
+        </div>
+        <section id="destination-section">
+            <div class="destination-container">
+                <div class="destination-content">
+                    <h2 class="destination-title">今日はどこに行く？</h2>
+                    <div class="destination-buttons">
+                        <a href="detail.html?title=新・花と植物百科" class="dest-btn"><span class="icon">🌍</span>世界中</a>
+                        <a href="detail.html?title=ヨーロッパの田舎町" class="dest-btn"><span class="icon">🏘️</span>ヨーロッパ</a>
+                        <a href="detail.html?title=ハリー・ポッターと賢者の石" class="dest-btn"><span class="icon">🪄</span>イギリス</a>
+                        <a href="detail.html?title=ゲームの王国[上]" class="dest-btn"><span class="icon">🛕</span>カンボジア</a>
+                        <a href="detail.html?title=太陽の子" class="dest-btn"><span class="icon">🇯🇵</span>日本</a>
+                        <a href="detail.html?title=哲学的思考" class="dest-btn"><span class="icon">🧠</span>頭の中</a>
+                        <a href="detail.html?title=ナルニア国物語ライオンと魔女" class="dest-btn"><span
+                                class="icon">🚪</span>衣装だんすの向こう</a>
+                    </div>
+                </div>
+
+                <div class="floating-dwarf">
+                    <svg viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+                        <!-- 浮かんでいる脚（内股を解消し、左右で少し長さを変えて非対称に） -->
+                        <path d="M 40,115 Q 35,130 38,145" fill="none" stroke="#bdc3c7" stroke-width="4" />
+                        <path d="M 60,115 Q 65,125 68,140" fill="none" stroke="#bdc3c7" stroke-width="4" />
+
+                        <!-- 靴（マスタードイエロー、揃わないように角度を別々にする） -->
+                        <path d="M 38,145 L 34,152" fill="none" stroke="#f1c40f" stroke-width="16"
+                            stroke-linecap="round" />
+                        <path d="M 68,140 L 72,148" fill="none" stroke="#f1c40f" stroke-width="16"
+                            stroke-linecap="round" />
+
+                        <!-- 体（紫がかったえんじ色） -->
+                        <path d="M 30,120 L 30,80 Q 50,70 70,80 L 70,120 Z" fill="#6c3483" />
+                        <!-- 襟/ヒゲ（背景に馴染まないように、はっきりとした白に変更） -->
+                        <path d="M 20,60 Q 50,110 80,60 Z" fill="#ffffff" />
+                        <!-- 顔 -->
+                        <circle cx="50" cy="55" r="20" fill="#ffdab9" />
+                        <!-- 鼻 -->
+                        <circle cx="50" cy="62" r="6" fill="#f5b7b1" />
+                        <!-- 目 -->
+                        <circle cx="43" cy="52" r="2" fill="#333" />
+                        <circle cx="57" cy="52" r="2" fill="#333" />
+                        <!-- 帽子 (ゆったり風になびく緑) -->
+                        <path d="M 10,60 Q 30,20 60,10 Q 80,30 90,60 Q 50,40 10,60 Z" fill="#1abc9c" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+        </main>
+
+        <footer>
+            早井葉子
+        </footer>
+</body>
+
+</html>

@@ -1,0 +1,248 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4e8d3;
+    /* 少しレトロで暖かい旅の始まりのような背景色 */
+    padding: 20px;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    color: #4b3832;
+}
+
+/* 本棚を表現するスタイル */
+.bookshelf {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    /* 右寄せにすることで、端数の出る下段が右揃えになります */
+    gap: 0 20px;
+    /* 横の隙間のみ設定、縦の隙間は背景・marginに合わせる */
+    padding: 0 30px;
+    /* 縦の余白は0にして背景グラデーションと合わせます */
+    background-color: #8b5a2b;
+    /* 木の本棚の色 */
+    border: 15px solid #5c3a21;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5) inset, 0 10px 20px rgba(0, 0, 0, 0.3);
+    margin: 0 auto;
+    max-width: 700px;
+    /* 1段あたり最大4冊分 (160px*4 + 20px*3 = 700px) */
+
+    /* 追加：本棚の仕切り板をグラデーションで表現（380pxごとに板を描画） */
+    background-image: repeating-linear-gradient(to bottom,
+            transparent 0px,
+            transparent 360px,
+            #4a2e1b 360px,
+            /* 仕切り板の色と影 */
+            #3a2211 380px
+            /* 本棚の底辺に近い色で立体感を */
+        );
+}
+
+.book-item {
+    background-color: #fff;
+    width: 160px;
+    height: 340px;
+    /* 高さを固定して棚板の上にぴったり乗せます */
+    margin-top: 20px;
+    /* 上の棚までの隙間 */
+    margin-bottom: 20px;
+    /* 下の棚板(20px幅)のスペースを確保。20+340+20=380ピッチ */
+    border-radius: 5px;
+    box-shadow: 3px 5px 10px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+}
+
+.real-book:hover {
+    transform: translateY(-10px) scale(1.05);
+    /* ホバー時に本が少し持ち上がる */
+}
+
+/* 小人のスタイル。本のような背景や影を消す */
+.dwarf-item {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    pointer-events: none;
+    /* マウスイベントを受け付けない */
+    overflow: visible;
+    /* 足がはみ出るように overflow:hidden を打ち消す */
+}
+
+.dwarf-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    /* 下（本棚の床）にくっつける */
+    justify-content: center;
+    padding-bottom: 0px;
+    /* 足を棚の下へぶら下げるために余白をなくす */
+}
+
+.dwarf-wrapper svg {
+    width: 100px;
+    height: 160px;
+    /* 足の分だけ高さを広げる */
+    margin-bottom: -40px;
+    /* 棚板の下側に足をぶら下げる（はみ出させる） */
+}
+
+.cover-wrapper {
+    width: 100%;
+    height: 220px;
+    background-color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.book-cover {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    /* 表紙の比率を維持 */
+    background-color: #fff;
+}
+
+.book-info {
+    padding: 10px;
+    text-align: center;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.author {
+    font-size: 0.8rem;
+    color: #555;
+    margin-bottom: 3px;
+}
+
+.publisher {
+    font-size: 0.7rem;
+    color: #777;
+}
+
+/* 「今日はどこに行く？」セクション */
+#destination-section {
+    margin: 50px auto;
+    max-width: 900px;
+    padding: 20px;
+    position: relative;
+    /* 子要素（小人）を絶対配置するための基準 */
+}
+
+.destination-title {
+    text-align: center;
+    color: #6d5b53;
+    /* 少し褪せた色にして目立ちすぎないように */
+    font-size: 1.2rem;
+    /* サイズを小さく */
+    margin-bottom: 20px;
+    font-weight: normal;
+    /* 太字をやめる */
+    letter-spacing: 2px;
+}
+
+.destination-container {
+    position: relative;
+    /* 小人をこのコンテナ内で右下に配置する */
+}
+
+/* ボタンとタイトルのまとまり */
+.destination-content {
+    padding-right: 120px;
+    /* 右下の大きな小人と重ならないよう余白をあけ、タイトルもボタンの中心に揃える */
+}
+
+.destination-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.dest-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #fcf3df;
+    color: #4b3832;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    border: 2px solid #d4a373;
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.dest-btn:hover {
+    background-color: #d4a373;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 2px 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.dest-btn .icon {
+    font-size: 1.2rem;
+    margin-right: 8px;
+}
+
+/* 右下の浮遊する小人 */
+.floating-dwarf {
+    position: absolute;
+    bottom: -40px;
+    right: -20px;
+    /* 少しはみ出すくらいに配置 */
+    width: 140px;
+    /* もっと大きく */
+    pointer-events: none;
+    /* クリックの邪魔にならないように */
+    animation: floatUpDown 3s ease-in-out infinite;
+    /* ふわふわと浮くアニメーション */
+}
+
+.floating-dwarf svg {
+    width: 100%;
+    height: auto;
+}
+
+/* 浮遊アニメーションに傾きを追加 */
+@keyframes floatUpDown {
+    0% {
+        transform: translateY(0) rotate(8deg);
+    }
+
+    50% {
+        transform: translateY(-15px) rotate(12deg);
+    }
+
+    100% {
+        transform: translateY(0) rotate(8deg);
+    }
+}
+
+footer, .footer {
+    text-align: center;
+    margin-top: 100px;
+    /* 線との隙間をしっかり確保してゆったりと */
+    padding-top: 40px;
+    /* 線とテキストの間の隙間を広げる */
+    padding-bottom: 40px;
+    /* テキストの下の隙間を広げる */
+    border-top: 1px solid #d4a373;
+    /* 上部に追加する細い線 */
+    color: #886e66;
+}

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本の詳細</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .detail-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+            text-align: center;
+        }
+        .cover-group {
+            position: relative;
+            z-index: 2; /* 手前になるように */
+            transform: translateX(0);
+            transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .detail-cover {
+            width: 300px;
+            max-width: 90%;
+            height: auto;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.5);
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        .book-comment {
+            margin-top: 20px;
+            margin-bottom: 40px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            color: #4b3832;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease 0.8s, transform 1s ease 0.8s;
+        }
+        /* アニメーション用のクラス（コメント用） */
+        .detail-container.animating .book-comment {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .content-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            width: 100%;
+            min-height: 520px; /* 表紙などを包む高さを確保 */
+        }
+        /* アニメーション用のクラス（後から付与される） */
+        .content-wrapper.animating .cover-group {
+            transform: translateX(120px); /* 表紙とコメントは少し右へ移動 */
+        }
+        .content-wrapper.animating .book-meta {
+            opacity: 1;
+            transform: translateX(-120px); /* 被るように控えめに左へ移動 */
+        }
+        .back-btn {
+            display: inline-block;
+            background-color: #4b3832;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        .back-btn:hover {
+            background-color: #8b5a2b;
+        }
+        .loading-text {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        /* 本の詳細の文字を控えめに（少し大きく修正） */
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #886e66;
+            font-weight: normal;
+            margin: 0;
+            padding-top: 10px;
+        }
+        /* 本の題名を大きく目立たせる */
+        #detail-title {
+            font-size: 2.2rem;
+            color: #4b3832;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        .book-meta {
+            background-color: #fcf3df;
+            padding: 20px 40px 20px 20px; /* 右側の余白を少し増やして文字が本に被らないようにする */
+            border-radius: 8px 0 0 8px; /* 右側だけ角を丸くしない */
+            box-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+            text-align: left;
+            color: #4b3832;
+            width: 300px;
+            position: absolute; /* 親要素内で基準を合わせる */
+            z-index: 1; /* 表紙の後ろに隠す */
+            opacity: 0; /* 最初は見えない状態 */
+            transform: translateX(0); /* 最初は中央 */
+            transition: opacity 1s ease 0.2s, transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+        .book-meta p {
+            margin: 8px 0;
+            font-size: 1.1rem;
+        }
+        .book-meta span {
+            font-weight: bold;
+            color: #8b5a2b;
+            display: inline-block;
+            width: 80px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="page-subtitle">本の詳細</h1>
+    </header>
+    <main>
+        <div class="detail-container" id="detail-container">
+            <h2 id="detail-title">読み込み中...</h2>
+
+            <div class="content-wrapper" id="content-wrapper">
+                <div class="book-meta" id="book-meta">
+                    <p><span>著者:</span> <span id="meta-author" style="font-weight: normal; color: inherit; width: auto;"></span></p>
+                    <p><span>出版社:</span> <span id="meta-publisher" style="font-weight: normal; color: inherit; width: auto;"></span></p>
+                    <p><span>出版年:</span> <span id="meta-year" style="font-weight: normal; color: inherit; width: auto;"></span></p>
+                    <p><span>ISBN:</span> <span id="meta-isbn" style="font-weight: normal; color: inherit; width: auto;"></span></p>
+                </div>
+                
+                <div class="cover-group">
+                    <img id="detail-cover" class="detail-cover" src="" alt="本の表紙" style="display: none;">
+                </div>
+            </div>
+
+            <div id="book-comment" class="book-comment" style="display: none;">
+                <!-- ここにコメントが表示されます -->
+            </div>
+
+            <a href="index.html" class="back-btn">本棚に戻る</a>
+        </div>
+    </main>
+    <footer>
+        早井葉子
+    </footer>
+
+    <script>
+        // ======= ここに7冊分のコメントを入力してください =======
+        const COMMENTS_DATA = {
+            "ゲームの王国 [上]": "舞台はカンボジア、ポル・ポト率いるクメール・ルージュによる、大虐殺。\nこの物語は、さまざまな語り手の視点から進行するが、主人公は二人。\n天賦の頭脳をもつ神童ムイタックと、ポル・ポトの隠し子ながら公正な「ゲームの王国」を目指す少女ソリヤ。\n作中の多くの登場人物それぞれの一挙手一投足に注目して内容を味わってもらいたいのはもちろんだが、この作品はそれまで私が読んだ中でも文章が洗練されていて、言葉の回路が緻密にできているところがお気に入りポイント。",
+            "新・花と植物百科": "英国王立園芸協会監修。\n世界中の植物を、8000種以上知ることができる。\n百科なので大きくて重い本。\n一度部屋で倒した時、とても大きな金属音がした。",
+            "ヨーロッパの田舎町・村": "田舎のヨーロッパの建築、そこに寄り添う自然、看板、洋風のアイテム。\n動物、人、家具、乗り物、文化。\n資料としての価値だけでなく、憧れもいっぱい詰まった一冊。",
+            "ナルニア国ものがたり ライオンと魔女": "ルーシィがかくれんぼで入った衣装だんすの奥には、雪世界が広がっていた。\nピーター、スーザン、エドマンド、ルーシィの四人きょうだいは、その魔法の国、ナルニアの真の王・アスランというライオンと共に、国を冬に閉ざした白い魔女と戦う。\n\n昔観た実写映画がとても素晴らしく強く印象に残ったため、特に読書好きな子供というわけではなかったが文庫版も読んだという思い出の作品。",
+            "ハリーポッターと賢者の石": "言わずと知れた名作ハリーポッターシリーズの最初の作品。ここから彼らの冒険が始まる。\nシリーズ通して、原作よりは映画版をよく観ていたが、昔読み聞かせをしてもらっていたので選出。",
+            "はじめての哲学的思考": "哲学的思考法のエッセンスを伝える本。\n自分が一人で考えていたことの答え合わせができて少し救われた。",
+            "太陽の子": "太平洋戦争の終戦から30年後の神戸を舞台に、沖縄出身者を両親に持つ少女・ふうちゃんが、沖縄戦や、周りの沖縄県出身者の立場・心情に触れていく。\nふうちゃんやみんなの気持ち、沖縄の文化や戦争について知ることができて良かった。\nまた、ふうちゃんの関西弁が、黙読なのに耳心地が良くて、柔らかい体温に触れたような感じがする。"
+        };
+        // =======================================================
+
+        async function loadDetail() {
+            const params = new URLSearchParams(window.location.search);
+            const title = params.get('title') || 'タイトル不明';
+            const isbn = params.get('isbn') || '不明';
+            const author = params.get('author') || '不明';
+            const publisher = params.get('publisher') || '不明';
+            const year = params.get('year') || '不明';
+
+            const titleEl = document.getElementById('detail-title');
+            const coverEl = document.getElementById('detail-cover');
+            const wrapperEl = document.getElementById('content-wrapper');
+            const commentEl = document.getElementById('book-comment');
+
+            document.getElementById('meta-author').textContent = author;
+            document.getElementById('meta-publisher').textContent = publisher;
+            document.getElementById('meta-year').textContent = year;
+            document.getElementById('meta-isbn').textContent = isbn;
+
+            titleEl.textContent = title;
+
+            // コメントの表示処理
+            if (COMMENTS_DATA[title]) {
+                // テキストの改行(\n)を <br> に変換して表示
+                commentEl.innerHTML = COMMENTS_DATA[title].replace(/\n/g, '<br>');
+                commentEl.style.display = 'block';
+            }
+
+            // 画像はimagesフォルダ内の画像（タイトル名.jpg）のみを使用
+            let coverUrl = `images/${title}.jpg`;
+
+            // 画像のロード
+            coverEl.src = coverUrl;
+            coverEl.style.display = 'block';
+
+            // もし画像が見つからなかった場合のフォールバック
+            coverEl.onerror = () => {
+                coverEl.src = 'https://via.placeholder.com/300x450?text=No+Cover';
+            };
+
+            // 画像が表示されたあと、アニメーションを発火させる
+            setTimeout(() => {
+                wrapperEl.classList.add('animating');
+                document.getElementById('detail-container').classList.add('animating');
+            }, 500); // 0.5秒後にアニメーション開始
+        }
+
+        loadDetail();
+    </script>
+</body>
+</html>
