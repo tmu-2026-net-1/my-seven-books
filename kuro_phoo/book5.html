@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>世界でいちばん透き通った物語</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="book-detail-page">
+	<header>
+		<h1>世界でいちばん透き通った物語</h1>
+	</header>
+	<main class="book-detail-main">
+		<section class="book-detail-layout">
+			<div class="frame">
+				<div class="frame-inner">
+					<img src="https://covers.openlibrary.org/b/isbn/9784323013794-L.jpg" alt="世界でいちばん透き通った物語 表紙">
+					<div class="frame-empty" style="display:none;">表紙画像</div>
+				</div>
+				<div class="frame-caption">杉井光 / 新潮文庫</div>
+			</div>
+			<article class="book-essay">
+				<h2>この本について</h2>
+                <p>作者: 杉井光</p>
+                <p>出版社: 新潮文庫</p>
+                <p>表現の仕方が面白いミステリー小説</p>
+				<p>この本はミステリーにハマってからすぐに読んだ本です。</p>
+				<p>この本は電子書籍化不可と言われています。ほんの題名も相まってその意味がよくわからなかったのですが、読むとその意味が本当によくわかります。</p>
+				<p>この本を読んだときに思ったのは、本でそんな表現もできるんだなということでした。</p>
+				<p>私は小説に対して堅苦しい印象が少なからずあったので、小説って自由なんだと新たな価値観を与えてくれたように思います。</p>
+				<a class="back-link" href="index.html">トップに戻る</a>
+			</article>
+		</section>
+	</main>
+	<script>
+		(function () {
+			const params = new URLSearchParams(window.location.search);
+			const cover = params.get('cover');
+			const title = params.get('title');
+			const author = params.get('author');
+			const publisher = params.get('publisher');
+			const img = document.querySelector('.frame-inner img');
+			const caption = document.querySelector('.frame-caption');
+			const heading = document.querySelector('h1');
+
+			if (cover && img) img.src = cover;
+			if (title && heading) {
+				heading.textContent = title;
+				document.title = title;
+			}
+			if (caption) {
+				const parts = [author, publisher].filter(Boolean);
+				if (parts.length > 0) caption.textContent = parts.join(' / ');
+			}
+		})();
+	</script>
+</body>
+</html>

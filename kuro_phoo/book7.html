@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ぼくとかあさん</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="book-detail-page">
+	<header>
+		<h1>ぼくとかあさん</h1>
+	</header>
+	<main class="book-detail-main">
+		<section class="book-detail-layout">
+			<div class="frame">
+				<div class="frame-inner">
+					<img src="https://covers.openlibrary.org/b/isbn/9784101802626-L.jpg" alt="ぼくとかあさん 表紙">
+					<div class="frame-empty" style="display:none;">表紙画像</div>
+				</div>
+				<div class="frame-caption">いもとようこ / 金の星社</div>
+			</div>
+			<article class="book-essay">
+				<h2>この本について</h2>
+                <p>作者: いもとようこ</p>
+                <p>出版社: 金の星社</p>
+                <p>貧しい親子の愛情を描いた絵本</p>
+				<p>この絵本は私が小さい頃に好きだった本です。</p>
+				<p>寝る前にお母さんに絵本を読んでもらうという時間があったのですが、よくこの本を選んでいました。</p>
+				<p>でもこの本を選ぶとお母さんに「これ読むと悲しくなるからあんまり読みたくないんだよね」と言われました。</p>
+				<p>小さい頃は意味がよくわかっていなかったのですが、今大きくなってから読むとその意味がわかります。</p>
+				<p>今読み返してみても、なんだか好みは変わらないのかなとも感じました。</p>
+				<a class="back-link" href="index.html">トップに戻る</a>
+			</article>
+		</section>
+	</main>
+	<script>
+		(function () {
+			const params = new URLSearchParams(window.location.search);
+			const cover = params.get('cover');
+			const title = params.get('title');
+			const author = params.get('author');
+			const publisher = params.get('publisher');
+			const img = document.querySelector('.frame-inner img');
+			const caption = document.querySelector('.frame-caption');
+			const heading = document.querySelector('h1');
+
+			if (cover && img) img.src = cover;
+			if (title && heading) {
+				heading.textContent = title;
+				document.title = title;
+			}
+			if (caption) {
+				const parts = [author, publisher].filter(Boolean);
+				if (parts.length > 0) caption.textContent = parts.join(' / ');
+			}
+		})();
+	</script>
+</body>
+</html>

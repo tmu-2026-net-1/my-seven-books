@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>スラムダンク 31巻</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="book-detail-page">
+	<header>
+		<h1>スラムダンク 31巻</h1>
+	</header>
+	<main class="book-detail-main">
+		<section class="book-detail-layout">
+			<div class="frame">
+				<div class="frame-inner">
+					<img src="https://covers.openlibrary.org/b/isbn/9784088704821-L.jpg" alt="スラムダンク 31巻 表紙">
+					<div class="frame-empty" style="display:none;">表紙画像</div>
+				</div>
+				<div class="frame-caption">井上雄彦 / 集英社</div>
+			</div>
+			<article class="book-essay">
+				<h2>この本について</h2>
+                <p>作者: 井上雄彦</p>
+                <p>出版社: 集英社</p>
+                <p>バスケットボールをテーマにしたスポーツ漫画</p>
+				<p>この漫画はおばあちゃんの家にあったのをもらって読んだものです。</p>
+				<p>もともとバスケットボールは習い事でしていたのですが、始めたばかりの頃にこの漫画を読んで、よりいっそうバスケが好きになり、もっと頑張ろうと思うようになったきっかけの本です。</p>
+				<p>バスケが好きな人には読んでほしいし、そうでなくとも一度は読んでほしい漫画になっています。</p>
+				<a class="back-link" href="index.html">トップに戻る</a>
+			</article>
+		</section>
+	</main>
+	<script>
+		(function () {
+			const params = new URLSearchParams(window.location.search);
+			const cover = params.get('cover');
+			const title = params.get('title');
+			const author = params.get('author');
+			const publisher = params.get('publisher');
+			const img = document.querySelector('.frame-inner img');
+			const caption = document.querySelector('.frame-caption');
+			const heading = document.querySelector('h1');
+
+			if (cover && img) img.src = cover;
+			if (title && heading) {
+				heading.textContent = title;
+				document.title = title;
+			}
+			if (caption) {
+				const parts = [author, publisher].filter(Boolean);
+				if (parts.length > 0) caption.textContent = parts.join(' / ');
+			}
+		})();
+	</script>
+</body>
+</html>

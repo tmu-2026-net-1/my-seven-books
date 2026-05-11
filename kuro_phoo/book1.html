@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ぼくらの七日間戦争</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="book-detail-page">
+	<header>
+		<h1>ぼくらの七日間戦争</h1>
+	</header>
+	<main class="book-detail-main">
+		<section class="book-detail-layout">
+			<div class="frame">
+				<div class="frame-inner">
+					<img src="https://covers.openlibrary.org/b/isbn/4088718399-L.jpg" alt="ぼくらの七日間戦争 表紙">
+					<div class="frame-empty" style="display:none;">表紙画像</div>
+				</div>
+				<div class="frame-caption">宗田理 / 角川つばさ文庫</div>
+			</div>
+			<article class="book-essay">
+				<h2>この本について</h2>
+                <p>作者：宗田理</p>
+                <p>出版社：角川つばさ文庫</p>
+                <p>中学生が主人公の青春、冒険物語</p>
+				<p>こちらは私が読書感想文で何か本を読まなくてはいけない時に選んだ本です。</p>
+				<p>私はもともと絵がないと本は読めないと思っていたのですが、この本は読み始めたら止まらなくて自分でもびっくりした記憶があります。</p>
+				<p>この本は私の小説に対する苦手意識を無くしてくれたように思います。</p>
+				<a class="back-link" href="index.html">トップに戻る</a>
+			</article>
+		</section>
+	</main>
+	<script>
+		(function () {
+			const params = new URLSearchParams(window.location.search);
+			const cover = params.get('cover');
+			const title = params.get('title');
+			const author = params.get('author');
+			const publisher = params.get('publisher');
+			const img = document.querySelector('.frame-inner img');
+			const caption = document.querySelector('.frame-caption');
+			const heading = document.querySelector('h1');
+
+			if (cover && img) img.src = cover;
+			if (title && heading) {
+				heading.textContent = title;
+				document.title = title;
+			}
+			if (caption) {
+				const parts = [author, publisher].filter(Boolean);
+				if (parts.length > 0) caption.textContent = parts.join(' / ');
+			}
+		})();
+	</script>
+</body>
+</html>

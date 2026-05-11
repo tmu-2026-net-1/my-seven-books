@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ハイキュー</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body class="book-detail-page">
+	<header>
+		<h1>ハイキュー</h1>
+	</header>
+	<main class="book-detail-main">
+		<section class="book-detail-layout">
+			<div class="frame">
+				<div class="frame-inner">
+					<img src="https://covers.openlibrary.org/b/isbn/9784088718399-L.jpg" alt="ハイキュー 表紙">
+					<div class="frame-empty" style="display:none;">表紙画像</div>
+				</div>
+				<div class="frame-caption">古舘春一 / 集英社</div>
+			</div>
+			<article class="book-essay">
+				<h2>この本について</h2>
+                <p>作者: 古舘春一</p>
+                <p>出版社: 集英社</p>
+                <p>バレーボールをテーマにしたスポーツ漫画</p>
+				<p>この漫画は中学校の時に出会ってどハマりした漫画です。</p>
+				<p>バスケ部だったのにも関わらずハイキューの真似をしたり、体育では必ずバレーを選ぶようになったりとても影響を受けました。</p>
+				<p>ハイキューの影響でバレーに興味を持って高校ではバレー部に入ってしまいました。変人速攻ができると思っていました。流石に無理でした。</p>
+				<p>ハイキューを知るまではバスケ一筋だったので大きな影響を受けたと思っています。</p>
+				<a class="back-link" href="index.html">トップに戻る</a>
+			</article>
+		</section>
+	</main>
+	<script>
+		(function () {
+			const params = new URLSearchParams(window.location.search);
+			const cover = params.get('cover');
+			const title = params.get('title');
+			const author = params.get('author');
+			const publisher = params.get('publisher');
+			const img = document.querySelector('.frame-inner img');
+			const caption = document.querySelector('.frame-caption');
+			const heading = document.querySelector('h1');
+
+			if (cover && img) img.src = cover;
+			if (title && heading) {
+				heading.textContent = title;
+				document.title = title;
+			}
+			if (caption) {
+				const parts = [author, publisher].filter(Boolean);
+				if (parts.length > 0) caption.textContent = parts.join(' / ');
+			}
+		})();
+	</script>
+</body>
+</html>
