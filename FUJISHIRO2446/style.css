@@ -1,0 +1,120 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  background-color: #fafafa;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.books-container {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#books-stack {
+  flex-shrink: 0;
+  width: 320px;
+  height: 700px;
+  display: block;
+  overflow: visible;
+}
+
+.book-detail {
+  flex: 1;
+  min-width: 350px;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  min-height: 400px;
+}
+
+.detail-content {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  align-items: flex-start;
+}
+
+.detail-cover {
+  width: 150px;
+  height: auto;
+  flex-shrink: 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detail-info h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.3rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.detail-info p {
+  margin: 0.5rem 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+.detail-info strong {
+  color: #333;
+}
+
+/* Old styles kept for compatibility */
+.book-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.book-list-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1rem;
+  width: 10rem;
+  aspect-ratio: 1/1.4;
+  border: 2px solid #ccc;
+  border-radius: 0.5rem;
+  background-color: #f8f8f8;
+}
+
+.author {
+  color: #444;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 1.25rem;
+  line-height: 1;
+  overflow: scroll;
+}
+
+.publisher, .year {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #c88;
+}
