@@ -1,0 +1,273 @@
+
+.page-childhood{
+  position: relative;
+  background-image: url("../images/Background1.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.page-childhood::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("../images/Childhood2.png");
+  background-position: right;
+  background-size: 40vw auto;
+  background-repeat: no-repeat;
+  margin-top: 240px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-teenage{
+  position: relative;
+  background-image: url("../images/Background3.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.page-teenage::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("../images/Teenage2.png");
+  background-position: right;
+  background-size: 40vw auto;
+  background-repeat: no-repeat;
+  margin-top: 240px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-now{
+  position: relative;
+  background-image: url("../images/Background2.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.page-now::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("../images/Now2.png");
+  background-position: right;
+  background-size: 40vw auto;
+  background-repeat: no-repeat;
+  margin-top: 240px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.book-title{
+    margin-top: 4vw;
+    padding: 0px;
+    text-align: center;
+}
+
+.book-tool {
+    display: inline-block;
+    text-align: center;
+    margin-top: 0px;
+    line-height: 1.8;
+}
+
+.book-title h1 { margin: 0 0 0.6rem 0; } /* h1 の下マージンを調整 */
+
+
+.book-content {
+  margin-top: 40px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+/* imgではなくコンテナを動かす */
+.bookimage {
+  flex: 0 0 auto;
+  transform: translateX(clamp(-120px, -6vw, -16px));
+}
+
+.bookimage img {
+  display: block;
+  margin-left: 0;
+  height: clamp(260px, 32vw, 320px);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.book-detail{
+    text-align: left;  
+    margin-left: 0;
+    width: clamp(320px, 35vw, 600px);
+    margin-top: 20px;
+}
+
+.book-detail h2,
+.book-detail p {
+    margin: 0 0 12px 0;  /* 下のマージンだけ残して上は0に */
+}
+
+
+
+
+.era-shelf {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  width: 100%;
+  justify-content: center;
+  margin-top: 8vw;
+  margin-bottom: 10vw;
+}
+
+/* 棚を伸ばす */
+#book-list { flex: 1 1 auto; }
+
+/* 右側メタ */
+.era-meta {
+  flex: 0 0 clamp(140px, 18vw, 260px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  align-items: center;
+  text-align: center;
+  position: sticky;
+  top: 140px; 
+  margin-top: 10vw; 
+  margin-right: 30vw;
+}
+
+
+/* モバイルでは縦並びに戻す */
+@media (max-width: 800px) {
+  .shelf-row { flex-direction: column; align-items: center; }
+  .era-meta { position: static; top: auto; align-items: center; text-align: center; margin-top: 1rem; }
+
+  .book-content {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  }
+
+.bookimage {
+    transform: none;
+    align-self: center;
+  }
+}
+
+.era-title{
+    text-align: center;
+    margin-top: 0;
+}
+
+.era-subtitle{
+    text-align: center;
+    margin-top: 0;
+}
+
+.era-text{
+    text-align: left;
+    margin-top: 8px;
+    margin-left: 30px;
+    width: clamp(240px, 22vw, 600px);
+}
+
+.page-childhood #book-list .book-group {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  margin-bottom: 40px;
+  margin-top: 2vw;
+  margin-left: 25vw;
+}
+
+.page-childhood #book-list .book-group::after {
+  width: 320px;
+  margin-left: -38px;
+}
+
+.page-teenage #book-list .book-group {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  margin-top: 2vw;
+  margin-left: 28vw;
+  margin-bottom: 40px;
+}
+
+.page-teenage #book-list .book-group::after {
+  width: 260px;
+  margin-left: -48px;
+}
+
+.page-now #book-list .book-group {
+  display: flex;
+  gap: 8px;
+  position: relative;
+  margin-top: 2vw;
+  margin-left: 30vw;
+  margin-bottom: 40px;
+}
+
+.page-now #book-list .book-group::after {
+  width: 240px;
+  margin-left: -48px;
+}
+
+.page-teenage .era-shelf {
+  margin-top: 8vw;
+  margin-bottom: 10vw;
+}
+
+.page-now .era-shelf {
+  margin-top: 8vw;
+  margin-bottom: 10vw;
+}
+
+
+#book-list .book-item {
+  background-color: #ffffff;
+  border: #afafaf solid 2px;
+  border-radius: 5px;
+  padding: 20px;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: block;
+  height: 270px;
+  flex: 0 0 auto;
+  transition: transform 0.18s ease;
+  transform-origin: center;
+  position: relative;
+  z-index: 2;
+}
+
+#book-list .book-item:hover {
+  transform: scale(1.08);
+}
+
+.page-childhood #book-list .book-group::before,
+.page-teenage #book-list .book-group::before,
+.page-now #book-list .book-group::before {
+  content: none !important;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+    margin-top: 10px;
+    z-index: 1000;
+}
+

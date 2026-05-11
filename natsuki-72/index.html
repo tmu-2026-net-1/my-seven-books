@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私を形づくる７冊</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header>
+        <a href="index.html"><img src="images/logo.png" alt="Logo"></a>
+        <button id="menu-toggle" class="menu-button" aria-expanded="false" aria-controls="site-menu">☰</button>
+
+        <nav id="site-menu" class="menu" role="navigation">
+          <a href="index.html" class="menu-category">トップページ</a>
+          <p class="menu-category">こども時代の棚  ▼</p>
+            <div class="Childhood">
+              <a href="books/Akariwokesuto.html">あかりをけすと</a>
+              <a href="books/Anne.html">赤毛のアンPART1</a>
+              <a href="books/LittleaWomen.html">若草物語</a>
+            </div>
+          <p class="menu-category">思春期の棚  ▼</p>
+            <div class="Teenage">
+              <a href="books/MakinoCollection.html">たったひとりの君へー牧野あおい作品集ー</a>
+             <a href="books/YourFriend.html">きみの友だち</a>
+            </div>
+          <p class="menu-category">今のわたしの棚  ▼</p>
+            <div class="Now">
+              <a href="books/YouAndMe.html">正反対な君と僕</a>
+              <a href="books/Frieren.html">葬送のフリーレン</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h1>私をかたちづくる７冊</h1>
+            <p>このサイトは、私の人生に影響を与えた７冊の本を紹介するためのものです。</p>
+            <p>本棚をのぞいて、気になる本をチェックしてみてください。</p>
+        </section>
+        <div id="book-list"></div>
+        
+    </main>
+
+    <footer>
+            <p>&copy; 2026 私をかたちづくる７冊. Created by Hoshino Natsuki.</p>
+        
+    </footer>
+</body>
+
+</html>
