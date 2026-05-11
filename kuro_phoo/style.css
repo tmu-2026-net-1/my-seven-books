@@ -48,10 +48,10 @@ header h1 {
 /* Shelf and spine styles - more realistic bookshelf */
 #book-list { display:flex; justify-content:center; padding:3rem 1rem 2rem; background:#000000; }
 .shelf { width: fit-content; min-height: 400px; position:relative; padding:30px 20px 40px; background:linear-gradient(to bottom, #4a4a4a 0%, #595959 50%, #313131 100%); border-radius:8px; box-shadow: 0 10px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.1); flex-shrink: 0; }
-.spine-row { display:flex; gap:0; align-items:flex-end; justify-content:center; padding:20px 12px 0; flex-wrap:wrap; }
+.spine-row { display:flex; gap:3px; align-items:flex-end; justify-content:center; padding:20px 12px 0; flex-wrap:nowrap; overflow-x:auto; }
 .book-item { display:flex; flex-direction:column; align-items:center; flex-shrink:0; }
 .book-info { display:none; }
-.spine { width:50px; height:auto; min-height:180px; aspect-ratio: auto; display:flex; align-items:center; justify-content:center; text-decoration:none; color:#000; border-radius:2px; box-shadow: 0 8px 16px rgba(0,0,0,0.8), inset -2px 0 4px rgba(0,0,0,0.3), inset 1px 0 1px rgba(255,255,255,0.15); padding:3px; cursor:pointer; transition: all 200ms ease; position:relative; transform:perspective(600px) rotateY(-2deg) rotateX(1deg); flex: 0 0 auto; box-sizing: border-box; }
+.spine { width:50px; min-width:28px; height:auto; min-height:180px; aspect-ratio: auto; display:flex; align-items:center; justify-content:center; text-decoration:none; color:#000; border-radius:2px; box-shadow: 0 8px 16px rgba(0,0,0,0.8), inset -2px 0 4px rgba(0,0,0,0.3), inset 1px 0 1px rgba(255,255,255,0.15); border-left:1px solid rgba(0,0,0,0.12); border-right:1px solid rgba(0,0,0,0.12); padding:3px; cursor:pointer; transition: all 200ms ease; position:relative; transform:perspective(600px) rotateY(-2deg) rotateX(1deg); flex: 0 0 auto; box-sizing: border-box; }
 .spine::before { content:''; position:absolute; inset:0; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent); border-radius:2px; }
 .spine::after { content:''; position:absolute; top:0; left:0; right:0; bottom:0; background:linear-gradient(to right, rgba(0,0,0,0.08) 0%, transparent 40%); border-radius:2px; }
 .spine:hover { transform: perspective(600px) rotateY(-2deg) rotateX(1deg) translateY(-12px); box-shadow: 0 12px 24px rgba(0,0,0,0.9), inset -2px 0 4px rgba(0,0,0,0.3), inset 1px 0 1px rgba(255,255,255,0.15); }
