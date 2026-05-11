@@ -27,11 +27,12 @@ async function loadBooks() {
 
     // 画像はimagesフォルダ内の画像（タイトル名.jpg）のみを使用
     let coverUrl = `images/${book.title}.jpg`;
+    let nfdUrl = `images/${book.title.normalize('NFD')}.jpg`;
 
     item.innerHTML = `
       <a href="detail.html?isbn=${isbnRaw}&title=${encodeURIComponent(book.title)}&author=${encodeURIComponent(book.author)}&publisher=${encodeURIComponent(book.publisher)}&year=${encodeURIComponent(book.year)}" style="text-decoration: none; color: inherit; display: block; height: 100%;">
         <div class="cover-wrapper">
-          <img src="${coverUrl}" alt="${book.title}の表紙" class="book-cover" onerror="this.src='https://via.placeholder.com/150x220?text=No+Cover'">
+          <img src="${coverUrl}" alt="${book.title}の表紙" class="book-cover" onerror="if(!this.dataset.nfdChecked){this.dataset.nfdChecked='true'; this.src='${nfdUrl}';}else{this.src='https://via.placeholder.com/150x220?text=No+Cover';}">
         </div>
         <div class="book-info">
           <div class="title">${book.title}</div>

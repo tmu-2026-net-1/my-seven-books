@@ -205,9 +205,15 @@
             coverEl.src = coverUrl;
             coverEl.style.display = 'block';
 
-            // もし画像が見つからなかった場合のフォールバック
+            // もし画像が見つからなかった場合のフォールバック（Macの濁点問題対応を含む）
             coverEl.onerror = () => {
-                coverEl.src = 'https://via.placeholder.com/300x450?text=No+Cover';
+                if (!coverEl.dataset.nfdChecked) {
+                    coverEl.dataset.nfdChecked = 'true';
+                    // Mac環境でアップロードされた濁点が分かれたファイル名（NFD）を試す
+                    coverEl.src = `images/${title.normalize('NFD')}.jpg`;
+                } else {
+                    coverEl.src = 'https://via.placeholder.com/300x450?text=No+Cover';
+                }
             };
 
             // 画像が表示されたあと、アニメーションを発火させる
