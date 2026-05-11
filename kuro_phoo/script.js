@@ -1,5 +1,37 @@
 const coverCache = new Map();
 
+function isbn13ToIsbn10(isbn) {
+    const cleanISBN = String(isbn || '').replace(/[\-\s]/g, '');
+    if (cleanISBN.length === 10) {
+        return cleanISBN;
+    }
+
+    if (cleanISBN.length !== 13 || !cleanISBN.startsWith('978')) {
+        return '';
+    }
+
+    const base = cleanISBN.slice(3, 12);
+    let sum = 0;
+
+    for (let index = 0; index < base.length; index += 1) {
+        sum += Number(base[index]) * (10 - index);
+    }
+
+    const remainder = 11 - (sum % 11);
+    const checkDigit = remainder === 10 ? 'X' : remainder === 11 ? '0' : String(remainder);
+    return `${base}${checkDigit}`;
+}
+
+function buildAmazonCoverUrls(isbn) {
+    const isbn10 = isbn13ToIsbn10(isbn);
+    if (!isbn10) return [];
+
+    return [
+        `https://m.media-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`,
+        `https://images-na.ssl-images-amazon.com/images/P/${isbn10}.01.LZZZZZZZ.jpg`
+    ];
+}
+
 async function getBookCoverFromISBN(isbn) {
     if (!isbn) return '';
     const cleanISBN = String(isbn).replace(/[\-\s]/g, '');
@@ -9,10 +41,50 @@ async function getBookCoverFromISBN(isbn) {
         return coverCache.get(cleanISBN);
     }
 
-    // Do not prefetch/check with fetch(); just use image URL directly.
-    // Cross-origin image fetch checks can fail even when <img> can display it.
+    const amazonCandidates = buildAmazonCoverUrls(cleanISBN);
+    if (amazonCandidates.length > 0) {
+        coverCache.set(cleanISBN, amazonCandidates[0]);
+        return amazonCandidates[0];
+    }
+
+    // Try OpenBD first (Japanese book database)
+    try {
+        const bdResponse = await fetch(`https://api.openbd.jp/v1/get?isbn=${cleanISBN}`);
+        const bdData = await bdResponse.json();
+        
+        if (bdData && Array.isArray(bdData) && bdData[0] && bdData[0] !== null) {
+            const book = bdData[0];
+            
+            // Check summary.cover first
+            if (book.summary && book.summary.cover) {
+                console.log(`✓ OpenBD成功(summary.cover): ${cleanISBN}`);
+                coverCache.set(cleanISBN, book.summary.cover);
+                return book.summary.cover;
+            }
+            
+            // Check onix structure for image
+            if (book.onix && book.onix.CollateralDetail) {
+                const collateral = book.onix.CollateralDetail;
+                if (collateral.SupportingResource && Array.isArray(collateral.SupportingResource)) {
+                    for (let resource of collateral.SupportingResource) {
+                        if (resource.ResourceContentType === '01' && resource.ResourceVersionFeature && resource.ResourceVersionFeature.ResourceLink) {
+                            const coverUrl = resource.ResourceVersionFeature.ResourceLink;
+                            console.log(`✓ OpenBD成功(onix.SupportingResource): ${cleanISBN}`);
+                            coverCache.set(cleanISBN, coverUrl);
+                            return coverUrl;
+                        }
+                    }
+                }
+            }
+        }
+    } catch (err) {
+        console.log(`OpenBD エラー (${cleanISBN}):`, err.message);
+    }
+
+    // Fallback to OpenLibrary
     const coverUrl = `https://covers.openlibrary.org/b/isbn/${cleanISBN}-L.jpg`;
     coverCache.set(cleanISBN, coverUrl);
+    console.log(`OpenLibrary フォールバック: ${cleanISBN} → ${coverUrl}`);
     return coverUrl;
 }
 
@@ -50,6 +122,7 @@ function renderShelf(books) {
 
         const cleanISBN = String(isbn || '').replace(/[\-\s]/g, '');
         if (cleanISBN) {
+            candidates.push(...buildAmazonCoverUrls(cleanISBN));
             candidates.push(`https://covers.openlibrary.org/b/isbn/${cleanISBN}-L.jpg`);
             candidates.push(`https://covers.openlibrary.org/b/isbn/${cleanISBN}-M.jpg`);
             candidates.push(`https://books.google.com/books/content?vid=ISBN${cleanISBN}&printsec=frontcover&img=1&zoom=2&source=gbs_api`);
@@ -216,12 +289,17 @@ async function loadBooks() {
         const data = await response.json();
 
         const myData = data.filter(d => d.name === 'Kurosaki');
+        console.log(`取得した本の総数: ${myData.length}`);
+        myData.slice(0, 7).forEach((d, i) => {
+            console.log(`${i+1}. ${d.title} | ISBN=${d.isbn} | cover=${d.cover || 'なし'}`);
+        });
 
         const books = await Promise.all(
             myData.slice(0, 7).map(async (d, i) => {
                 let cover = d.cover || d.image || d.thumbnail || '';
                 if (!cover && d.isbn) {
                     cover = await getBookCoverFromISBN(d.isbn);
+                    console.log(`生成URL: ${d.title} → ${cover}`);
                 }
                 return {
                     title: d.title || d.book || d.name || '無題',
