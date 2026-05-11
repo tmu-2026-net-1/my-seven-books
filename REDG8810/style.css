@@ -1,0 +1,215 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f0f4f8;
+    font-family: 'Sawarabi Mincho', 'Noto Serif JP', serif; /* 明朝体で本のような雰囲気を出す */
+    color: #333;
+}
+
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1.2rem;
+    color: #666;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+
+#container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.item-wrapper {
+    position: absolute;
+    width: 100vw;
+    /* JSでtopを操作して落下させる */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto; /* コンテンツに応じた高さに */
+    will-change: transform;
+}
+
+/* 本（書影）の部分 */
+.book-cover {
+    width: 40vw; /* 少し大きめに */
+    max-width: 500px;
+    height: auto;
+    object-fit: contain;
+    box-shadow: 15px 15px 30px rgba(0,0,0,0.3); /* 影も少し強くして浮いている感 を出す */
+}
+
+/* 背景情報（切れ端）の部分 */
+.info-paper {
+    width: 85vw; /* 用紙を大きく画面いっぱいに */
+    max-width: 1200px;
+    min-height: 450px; /* 高さも余裕を持たせる */
+    background-color: #faf9f5;
+    /* width/paddingはJS側で被りを避けるために動的設定 */
+    box-sizing: border-box;
+    /* 破れた紙やメモの雰囲気を出すためのギザギザ・影 */
+    box-shadow: 5px 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #e0dcd3;
+    position: relative;
+    /* 少し傾ける */
+    transform: rotate(calc(-2deg + var(--rand-rot, 0deg)));
+}
+
+/* 原稿用紙っぽい罫線バリエーション */
+.info-paper.type-manuscript {
+    background-image: 
+        linear-gradient(transparent 95%, #ddd 95%),
+        linear-gradient(90deg, transparent 95%, #ddd 95%);
+    background-size: 20px 20px;
+}
+
+/* メモ用紙っぽい罫線バリエーション */
+.info-paper.type-memo {
+    background-image: linear-gradient(transparent 95%, #b3d4fc 95%);
+    background-size: 100% 30px;
+    line-height: 30px;
+}
+
+/* チラシ風バリエーション */
+.info-paper.type-flyer {
+    background-color: #ffdce0;
+    font-family: 'Hiragino Kaku Gothic ProN', sans-serif; /* ゴシックっぽく */
+    transform: rotate(calc(3deg + var(--rand-rot, 0deg)));
+}
+
+.info-title {
+    font-size: 2rem; /* 文字を大きく */
+    font-weight: bold;
+    margin: 0 0 15px 0;
+    line-height: 1.4;
+}
+
+.info-author {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0 0 25px 0;
+}
+
+.info-desc {
+    font-size: 1.05rem;
+    color: #444;
+    line-height: 1.8;
+    max-height: 200px; /* 行数アップ */
+    overflow: hidden;
+    position: relative;
+}
+
+/* グラデーションで文末をぼかす */
+.info-desc::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(transparent, var(--paper-bg, #faf9f5));
+}
+.info-paper.type-memo .info-desc::after { --paper-bg: #faf9f5; }
+.info-paper.type-flyer .info-desc::after { --paper-bg: #ffdce0; }
+
+/* 手書き・装飾フォント */
+.font-klee { font-family: 'Klee One', cursive; }
+
+/* 方眼紙っぽい罫線バリエーション */
+.info-paper.type-graph {
+    background-color: #fff;
+    background-image: 
+        linear-gradient(#e0e0e0 1px, transparent 1px),
+        linear-gradient(90deg, #e0e0e0 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+.info-paper.type-graph .info-desc::after { --paper-bg: rgba(255,255,255,0.7); }
+
+/* 詳細情報用のミニ用紙たち */
+.detail-paper {
+    position: absolute;
+    padding: 20px;
+    box-shadow: 3px 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid #e0dcd3;
+    box-sizing: border-box;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 3;
+    background-color: #faf9f5;
+    max-width: 300px;
+}
+
+.item-wrapper.expanded .detail-paper {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* それぞれの詳細情報用紙の初期位置と展開後の位置 */
+.detail-1 { 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+}
+.item-wrapper.expanded .detail-1 {
+    transform: translate(-150%, -100%) scale(1) rotate(-10deg);
+}
+
+.detail-2 { 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+}
+.item-wrapper.expanded .detail-2 {
+    transform: translate(50%, -120%) scale(1) rotate(5deg);
+}
+
+.detail-3 { 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%) scale(0.5) rotate(0deg);
+}
+.item-wrapper.expanded .detail-3 {
+    transform: translate(-50%, 100%) scale(1) rotate(8deg);
+}
+
+.detail-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #888;
+    margin: 0 0 5px 0;
+    border-bottom: 1px dashed #ccc;
+    padding-bottom: 5px;
+}
+.detail-content {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+}
+
+/* 書籍情報のメイン用紙も重ね置きデザインにする */
+.info-paper::before, .info-paper::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border: 1px solid #e0dcd3;
+    z-index: -1;
+    pointer-events: none;
+    background-color: inherit;
+    box-shadow: 2px 4px 15px rgba(0,0,0,0.05);
+}
+
+.info-paper::before {
+    transform: rotate(2.5deg);
+}
+.info-paper::after {
+    transform: rotate(-1.5deg);
+    z-index: -2;
+}
