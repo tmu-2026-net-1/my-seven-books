@@ -3,13 +3,13 @@ const BOOKS_DATA_URL = "https://script.google.com/macros/s/AKfycbzcbPFBgkWfbA4Bs
 const getBookDetailPage = (bookId) => `book-${bookId}.html`;
 const BOOKS_DATA_CACHE_KEY = "books_data_cache_v1";
 const FALLBACK_BOOKS = [
-  { id: 127, name: "Ota", isbn: "978-4-488-40101-6", title: "孤島の鬼", author: "江戸川乱歩", publisher: "創元推理文庫", year: 1987, comment: "", coverUrl: "covers/9784488401016.png" },
-  { id: 128, name: "Ota", isbn: "978-4-10-114901-1", title: "江戸川乱歩傑作選", author: "江戸川乱歩", publisher: "新潮文庫", year: 1960, comment: "", coverUrl: "covers/9784101149011.png" },
-  { id: 129, name: "Ota", isbn: "978-4-10-135551-1", title: "向日葵の咲かない夏", author: "道尾秀介", publisher: "新潮文庫", year: 2008, comment: "", coverUrl: "covers/9784101355511.jpg" },
-  { id: 130, name: "Ota", isbn: "978-4-04-373602-7", title: "月魚", author: "三浦しをん", publisher: "角川文庫", year: 2004, comment: "", coverUrl: "covers/9784043736027.png" },
-  { id: 131, name: "Ota", isbn: "978-4-15-203476-2", title: "五番目のサリー", author: "ダニエル・キイス", publisher: "早川書房", year: 1991, comment: "", coverUrl: "covers/9784152034762.png" },
-  { id: 132, name: "Ota", isbn: "978-4-08-747577-7", title: "ネバーランド", author: "恩田陸", publisher: "集英社文庫", year: 2003, comment: "", coverUrl: "covers/9784087475777.png" },
-  { id: 133, name: "Ota", isbn: "978-4-10-131511-9", title: "夏の庭", author: "湯本香樹実", publisher: "新潮文庫", year: 1994, comment: "", coverUrl: "covers/9784101315119.png" },
+  { id: 127, name: "Ota", isbn: "978-4-488-40101-6", title: "孤島の鬼", author: "江戸川乱歩", publisher: "創元推理文庫", year: 1987, comment: "", coverUrl: "covers/9784488401016.JPG" },
+  { id: 128, name: "Ota", isbn: "978-4-10-114901-1", title: "江戸川乱歩傑作選", author: "江戸川乱歩", publisher: "新潮文庫", year: 1960, comment: "", coverUrl: "covers/9784101149011.JPG" },
+  { id: 129, name: "Ota", isbn: "978-4-10-135551-1", title: "向日葵の咲かない夏", author: "道尾秀介", publisher: "新潮文庫", year: 2008, comment: "", coverUrl: "covers/9784101355511.png" },
+  { id: 130, name: "Ota", isbn: "978-4-04-373602-7", title: "月魚", author: "三浦しをん", publisher: "角川文庫", year: 2004, comment: "", coverUrl: "covers/9784043736027.JPG" },
+  { id: 131, name: "Ota", isbn: "978-4-15-203476-2", title: "五番目のサリー", author: "ダニエル・キイス", publisher: "早川書房", year: 1991, comment: "", coverUrl: "covers/9784152034762.JPG" },
+  { id: 132, name: "Ota", isbn: "978-4-08-747577-7", title: "ネバーランド", author: "恩田陸", publisher: "集英社文庫", year: 2003, comment: "", coverUrl: "covers/9784087475777.JPG" },
+  { id: 133, name: "Ota", isbn: "978-4-10-131511-9", title: "夏の庭", author: "湯本香樹実", publisher: "新潮文庫", year: 1994, comment: "", coverUrl: "covers/9784101315119.JPG" },
 ];
 
 const normalizeIsbn = (isbn) => String(isbn || "").replace(/[^0-9Xx]/g, "");
